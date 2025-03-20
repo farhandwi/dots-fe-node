@@ -298,7 +298,7 @@ export default function MFilesSection({
               variant="outline"
               className="flex items-center gap-2"
               // onClick={() => window.open(`${process.env.NEXT_PUBLIC_MFILES_END_POINT}/Default.aspx#7B5D8FF911-CE06-4B27-8311-B0AD764921C0%7D/search?query=${formData.dots_number}`, '_blank')}
-              onClick={() => window.open(`${process.env.NEXT_PUBLIC_MFILES_END_POINT}/#/vault/{5D8FF911-CE06-4B27-8311-B0AD764921C0}/search?query=${formData.dots_number}`, '_blank')}
+              onClick={() => window.open(`${process.env.NEXT_PUBLIC_MFILES_END_POINT}/#/vault/{FC9DB552-CAFC-4487-B02F-11836825343D}/search?query=${formData.dots_number}`, '_blank')}
             >
               <ExternalLink className="h-4 w-4" />
               View M-Files
