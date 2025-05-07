@@ -39,7 +39,7 @@ jest.mock('cmdk', () => {
 });
 
 // Mock the Dialog component
-jest.mock('../src/components/ui/dialog', () => {
+jest.mock('../../src/components/ui/dialog', () => {
   return {
     Dialog: ({ children, ...props }: { children: React.ReactNode }) => (
       <div data-testid="dialog" {...props}>{children}</div>
@@ -58,7 +58,7 @@ jest.mock('lucide-react', () => {
 });
 
 // Mock utility function
-jest.mock('../src/lib/utils', () => {
+jest.mock('../../src/lib/utils', () => {
   return {
     cn: (...classes: any[]) => classes.filter(Boolean).join(' '),
   };

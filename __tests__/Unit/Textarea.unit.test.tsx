@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { Textarea } from "@/components/ui/textarea";
 
 // Mock the cn utility function
-jest.mock("../src/lib/utils", () => ({
+jest.mock("../../src/lib/utils", () => ({
   cn: (...inputs: string[]) => inputs.filter(Boolean).join(" "),
 }));
 

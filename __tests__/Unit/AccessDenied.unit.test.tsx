@@ -1,9 +1,9 @@
 import React from 'react';
 import { render, screen, fireEvent } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import AdminAccessDenied from '@/components/error/admin-access-denied/page';
+import AccessDenied from '@/components/error/access-denied/page';
 
-// Mock the next/navigation router with a named mock function
+// Mock the next/navigation router
 const pushMock = jest.fn();
 jest.mock('next/navigation', () => ({
   useRouter: () => ({
@@ -19,7 +19,7 @@ jest.mock('lucide-react', () => ({
 }));
 
 // Mock the UI components
-jest.mock('../src/components/ui/button', () => ({
+jest.mock('../../src/components/ui/button', () => ({
   Button: ({ children, onClick, className, variant }: any) => (
     <button 
       onClick={onClick} 
@@ -32,7 +32,7 @@ jest.mock('../src/components/ui/button', () => ({
   ),
 }));
 
-jest.mock('../src/components/ui/alert', () => ({
+jest.mock('../../src/components/ui/alert', () => ({
   Alert: ({ children, className, variant }: any) => (
     <div className={className} data-variant={variant} data-testid="alert">
       {children}
@@ -82,15 +82,9 @@ afterAll(() => {
   });
 });
 
-describe('AdminAccessDenied Component', () => {
-  beforeEach(() => {
-    // Reset mocks before each test
-    pushMock.mockClear();
-    window.location.href = '';
-  });
-  
+describe('AccessDenied Component', () => {
   it('renders correctly with all elements', () => {
-    render(<AdminAccessDenied />);
+    render(<AccessDenied />);
     
     // Check main heading and subheading
     expect(screen.getByText('Access Denied')).toBeInTheDocument();
@@ -99,9 +93,7 @@ describe('AdminAccessDenied Component', () => {
     // Check alert message
     expect(screen.getByTestId('alert')).toBeInTheDocument();
     expect(screen.getByText('Access Restriction Notice')).toBeInTheDocument();
-    
-    // Check for role incompatibility message (specific to AdminAccessDenied)
-    expect(screen.getByText(/You cannot access this page due to role incompatibility/i)).toBeInTheDocument();
+    expect(screen.getByText(/You cannot access this page due to status incompatibility/i)).toBeInTheDocument();
     
     // Check icons are present
     expect(screen.getAllByTestId('alert-octagon-icon').length).toBeGreaterThan(0);
@@ -118,7 +110,8 @@ describe('AdminAccessDenied Component', () => {
   });
   
   it('navigates to dashboard when "Go To Dashboard" is clicked', () => {
-    render(<AdminAccessDenied />);
+    pushMock.mockClear(); // Clear any previous calls
+    render(<AccessDenied />);
     
     const dashboardButton = screen.getByText('Go To Dashboard').closest('button');
     fireEvent.click(dashboardButton!);
@@ -127,7 +120,7 @@ describe('AdminAccessDenied Component', () => {
   });
   
   it('opens email client when "Contact Support" is clicked', () => {
-    render(<AdminAccessDenied />);
+    render(<AccessDenied />);
     
     const supportButton = screen.getByText('Contact Support').closest('button');
     fireEvent.click(supportButton!);
@@ -136,7 +129,7 @@ describe('AdminAccessDenied Component', () => {
   });
   
   it('applies the correct styles and variants to components', () => {
-    render(<AdminAccessDenied />);
+    render(<AccessDenied />);
     
     // Check the alert has the correct variant
     const alert = screen.getByTestId('alert');
@@ -160,7 +153,7 @@ describe('AdminAccessDenied Component', () => {
   });
   
   it('has the correct layout structure', () => {
-    const { container } = render(<AdminAccessDenied />);
+    const { container } = render(<AccessDenied />);
     
     // Check main container
     expect(container.querySelector('.min-h-screen')).toBeInTheDocument();
@@ -180,20 +173,24 @@ describe('AdminAccessDenied Component', () => {
     expect(buttonsContainer).toBeInTheDocument();
   });
   
-  it('shows correct error message for admin role restriction', () => {
-    render(<AdminAccessDenied />);
+  it('contains the expected accessibility features', () => {
+    const { container } = render(<AccessDenied />);
     
-    // Check specifically for the admin-specific role error message
-    const alertDescription = screen.getByTestId('alert-description');
-    expect(alertDescription).toHaveTextContent(/role incompatibility/i);
-    expect(alertDescription).toHaveTextContent(/contact the Shared Service Department/i);
-  });
-  
-  it('renders email link with correct styling', () => {
-    const { container } = render(<AdminAccessDenied />);
+    // Check for semantic heading elements
+    expect(container.querySelector('h1')).toBeInTheDocument();
+    expect(container.querySelector('h1')?.textContent).toBe('Access Denied');
     
-    // Check that the email is styled correctly
-    const emailLink = screen.getByText('ITF.shared.services@tugu.com');
-    expect(emailLink).toHaveClass('text-blue-600');
+    // Check that alert-octagon icon is rendered
+    expect(screen.getAllByTestId('alert-octagon-icon').length).toBeGreaterThan(0);
+    
+    // Check that the large icon container exists
+    const iconContainer = container.querySelector('.bg-yellow-100.p-3.rounded-full');
+    expect(iconContainer).toBeInTheDocument();
+    
+    // Action buttons have appropriate text and icons
+    const buttons = screen.getAllByTestId('button');
+    buttons.forEach(button => {
+      expect(button.querySelector('div[data-testid]')).toBeInTheDocument();
+    });
   });
 });

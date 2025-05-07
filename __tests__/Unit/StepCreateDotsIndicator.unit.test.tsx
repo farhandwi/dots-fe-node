@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import StepCreateDotsIndicator from '../src/components/StepCreateDotsIndicator';
+import StepCreateDotsIndicator from '../../src/components/StepCreateDotsIndicator';
 
 // Mock Lucide React icons
 jest.mock('lucide-react', () => ({

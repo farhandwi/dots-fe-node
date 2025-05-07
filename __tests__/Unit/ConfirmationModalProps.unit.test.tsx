@@ -4,7 +4,7 @@ import '@testing-library/jest-dom';
 import ConfirmationModal from '@/components/modal/ConfirmationModalProps';
 
 // Mock the Button component from @/components/ui/button
-jest.mock('../src/components/ui/button', () => {
+jest.mock('../../src/components/ui/button', () => {
   return {
     Button: ({ children, onClick, className, variant }: { 
       children: React.ReactNode, 

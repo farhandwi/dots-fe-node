@@ -129,7 +129,7 @@ jest.mock('lucide-react', () => ({
 }));
 
 // Mock utility function
-jest.mock('../src/lib/utils', () => ({
+jest.mock('../../src/lib/utils', () => ({
   cn: (...classes: any[]) => classes.filter(Boolean).join(' '),
 }));
 

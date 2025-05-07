@@ -20,7 +20,7 @@ jest.mock("class-variance-authority", () => {
   };
 });
 
-jest.mock("../src/lib/utils", () => ({
+jest.mock("../../src/lib/utils", () => ({
   cn: (...inputs: string[]) => inputs.filter(Boolean).join(" "),
 }));
 
@@ -84,10 +84,7 @@ describe("Label Component", () => {
     expect(inputElement).toBeInTheDocument();
   });
 
-  // Testing CSS classes related to disabled state would typically require
-  // a more complex setup with an actual peer element that's disabled
   it("handles variant styles correctly", () => {
-    // Since we're mocking cva, we're really just testing that the className is passed correctly
     render(<Label className="variant-class">Variant Label</Label>);
     
     const labelElement = screen.getByText("Variant Label");

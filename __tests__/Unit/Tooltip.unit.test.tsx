@@ -79,7 +79,7 @@ jest.mock("@radix-ui/react-tooltip", () => {
 });
 
 // Mock the cn utility
-jest.mock("../src/lib/utils", () => ({
+jest.mock("../../src/lib/utils", () => ({
   cn: (...inputs: string[]) => inputs.filter(Boolean).join(" ")
 }));
 

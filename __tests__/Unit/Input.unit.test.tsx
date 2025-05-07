@@ -4,7 +4,7 @@ import "@testing-library/jest-dom";
 import { Input } from "@/components/ui/input";
 
 // Mock the cn utility function
-jest.mock("../src/lib/utils", () => ({
+jest.mock("../../src/lib/utils", () => ({
   cn: (...inputs: string[]) => inputs.filter(Boolean).join(" "),
 }));
 
